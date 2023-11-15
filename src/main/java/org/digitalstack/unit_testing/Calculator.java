@@ -34,7 +34,7 @@ public class Calculator {
 
     }
 
-    public int add(int first, int second) {
+    public int add(Integer first, Integer second) {
         return first + second;
     }
 
