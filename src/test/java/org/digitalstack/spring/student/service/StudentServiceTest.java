@@ -196,6 +196,45 @@ class StudentServiceTest {
     }
 
     @Test
+    public void whenUpdatePayloadAgeLessThan14_throwIllegalArgumentException() {
+        //given
+        StudentDto studentDto = StudentDto.builder()
+                .withId(123L)
+                .withName("Gigi")
+                .withAge(12)
+                .withGpa(9.50)
+                .build();
+
+        //when
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> studentService.updateStudent(studentDto));
+
+        //then
+        assertEquals("no age", ex.getMessage());
+    }
+
+    @Test
+    public void whenUpdatePayloadAgeLargerThan14_isOk() {
+        //given
+        StudentDto studentDto = StudentDto.builder()
+                .withId(123L)
+                .withName("Gigi")
+                .withAge(14)
+                .withGpa(9.50)
+                .build();
+        StudentModel dbModel = StudentModel.builder()
+                .withId(123L)
+                .build();
+        when(studentDao.getStudentById(eq(123L), anyBoolean())).thenReturn(Optional.of(dbModel));
+        when(studentDao.updateStudent(any(StudentModel.class))).thenReturn(true);
+
+        //when
+        boolean result = studentService.updateStudent(studentDto);
+
+        //then
+        assertTrue(result);
+    }
+
+    @Test
     public void whenUpdatePayloadMissingGpa_throwIllegalArgumentException() {
         //given
         StudentDto studentDto = StudentDto.builder()
