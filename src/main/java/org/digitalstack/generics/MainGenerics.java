@@ -30,7 +30,7 @@ public class MainGenerics {
         for (String string : strings) {
             System.out.println(string);
         }
-        List<Integer> myInts = new ArrayList<>();
+        var myInts = new ArrayList<>();
         addNumbers(myInts);
 
         Integer [] numbers = new Integer[25];
@@ -45,25 +45,25 @@ public class MainGenerics {
 
         System.out.println(s1 == s3);
 
-        List<Integer> list = new ArrayList<>(Arrays.asList(numbers));
+        var list = new ArrayList<>(Arrays.asList(numbers));
         list.add(5);
 
         iteratorTests();
 
-        Set<DayOfWeek> workingDays = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY);
+        var workingDays = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY);
 
         mapTests();
     }
 
     private static void mapTests() {
-        Map<Integer, Integer> numberMap = new HashMap<>();
+        var numberMap = new HashMap<Integer, Integer>();
         numberMap.put(1, 2);
         numberMap.putIfAbsent(2, 3);
 
-        List<Student> allStudents = new ArrayList<>();
+        var allStudents = new ArrayList<Student>();
 
-        Map<Integer, List<Student>> studentsByAge = new HashMap<>();
-        for (Student student : allStudents) {
+        var studentsByAge = new HashMap<Integer, List<Student>>();
+        for (var student : allStudents) {
             if (!studentsByAge.containsKey(student.getAge())) {
                 studentsByAge.put(student.getAge(), new ArrayList<>());
             }
@@ -73,7 +73,8 @@ public class MainGenerics {
                     .add(student);
         }
         studentsByAge.clear();
-        Map<Integer, List<Student>> collect = allStudents.stream()
+
+        var studentsMapByAge = allStudents.stream()
                 .collect(Collectors.groupingBy(Student::getAge));
 
 
